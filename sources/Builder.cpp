@@ -3,7 +3,7 @@
 #include <Builder.hpp>
 
 void Builder::create_program_options(boost::program_options::options_description& desc,
-                                     boost::program_options::variables_map& vm, const int& argc,
+                                     boost::program_options::variables_map& vmap, const int& argc,
                                      const char** argv) {
   desc.add_options()
       ("help,h", "Help screen\n")
@@ -20,8 +20,8 @@ void Builder::create_program_options(boost::program_options::options_description
 
       ("timeout,t", boost::program_options::value<int>()->default_value(0),
                            "Set waiting time\n");
-  store(parse_command_line(argc, argv, desc), vm);
-  notify(vm);
+  store(parse_command_line(argc, argv, desc), vmap);
+  notify(vmap);
 }
 
 void time_handler(Process_info&);
@@ -123,23 +123,23 @@ boost::log::trivial::severity_level Builder::choose_sev_lvl(
   else
     return boost::log::trivial::severity_level::error;
 }
-void Builder::settings_process(const boost::program_options::variables_map& vm) {
+void Builder::settings_process(const boost::program_options::variables_map& vmap) {
   bool install = false, pack = false;
   std::string config = "Debug";
   int time = 0;
-  if (vm.count("config")) {
-    config = vm["config"].as<std::string>();
+  if (vmap.count("config")) {
+    config = vmap["config"].as<std::string>();
   }
-  if (vm.count("install")) {
+  if (vmap.count("install")) {
     install = true;
   }
-  if (vm.count("pack")) {
+  if (vmap.count("pack")) {
     pack = true;
   }
-  if (vm.count("timeout")) {
+  if (vmap.count("timeout")) {
     BOOST_LOG_TRIVIAL(debug)
-      << "Timeout args got: " << vm["timeout"].as<int>() << ". Setting timer";
-    time = vm["timeout"].as<int>();
+      << "Timeout args got: " << vmap["timeout"].as<int>() << ". Setting timer";
+    time = vmap["timeout"].as<int>();
   }
   p_process = new Process(config, install, pack, time);
 }

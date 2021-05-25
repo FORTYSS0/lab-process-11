@@ -6,18 +6,18 @@ int main(int argc, const char *argv[]) {
   try
   {
     boost::program_options::options_description desc{"Options"};
-    boost::program_options::variables_map vm;
-    Builder::create_program_options(desc, vm, argc, argv);
+    boost::program_options::variables_map vmap;
+    Builder::create_program_options(desc, vmap, argc, argv);
 
-    if(vm.count("help"))
+    if(vmap.count("help"))
       std::cout << desc;
     else if(argc > 1){
       Builder builder{};
-      builder.start(vm);
+      builder.start(vmap);
     } else
       throw boost::program_options::error(error_mes);
-  } catch (const boost::program_options::error &ex)
+  } catch (const boost::program_options::error &e)
   {
-    BOOST_LOG_TRIVIAL(error) << ex.what() << '\n';
+    BOOST_LOG_TRIVIAL(error) << e.what() << '\n';
   }
 }
