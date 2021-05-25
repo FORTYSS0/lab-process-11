@@ -3,21 +3,21 @@
 #ifndef INCLUDE_BUILDER_HPP_
 #define INCLUDE_BUILDER_HPP_
 
+#include <iostream>
+#include <string>
+#include <boost/program_options.hpp>
+#include <boost/process.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/log/utility/setup/file.hpp>
 #include <boost/log/utility/setup/console.hpp>
 #include <boost/log/utility/setup/common_attributes.hpp>
-#include <iostream>
-#include <boost/program_options.hpp>
-#include <string>
-#include <boost/process.hpp>
 #include <async++.h>
-#include "process.hpp"
 #include <pthread.h>
 #include <future>
+#include "process.hpp"
 
-const char error_mes[] = "Error\n"
+const char error[] = "Error\n"
                          "Write to get Help: --help or -h";
 
 class Builder{

@@ -15,7 +15,7 @@ int main(int argc, const char *argv[]) {
       Builder builder{};
       builder.start(vmap);
     } else
-      throw boost::program_options::error(error_mes);
+      throw boost::program_options::error(error);
   } catch (const boost::program_options::error &e)
   {
     BOOST_LOG_TRIVIAL(error) << e.what() << '\n';
