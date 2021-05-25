@@ -2,23 +2,23 @@
 
 #include <Builder.hpp>
 
-void Builder::create_program_options(po::options_description& desc,
-                                     po::variables_map& vm, const int& argc,
+void Builder::create_program_options(boost::program_options::options_description& desc,
+                                     boost::program_options::variables_map& vm, const int& argc,
                                      const char** argv) {
   desc.add_options()
       ("help,h", "Help screen\n")
 
-      ("log_lvl,l", po::value<string>()->default_value("debug"),
+      ("log_lvl,l", boost::program_options::value<std::string>()->default_value("debug"),
            "Logger severity\n")
 
-      ("config,c", po::value<string>()->default_value("Debug"),
+      ("config,c", boost::program_options::value<std::string>()->default_value("Debug"),
        "Config build\n")
 
       ("install,i", "Install step\n")
 
       ("pack,p", "Pack step\n")
 
-      ("timeout,t", po::value<int>()->default_value(0),
+      ("timeout,t", boost::program_options::value<int>()->default_value(0),
                            "Set waiting time\n");
   store(parse_command_line(argc, argv, desc), vm);
   notify(vm);
@@ -26,8 +26,8 @@ void Builder::create_program_options(po::options_description& desc,
 
 void time_handler(Process_info&);
 
-void Builder::start(const po::variables_map& vm) {
-  init(choose_sev_lvl(vm["log_lvl"].as<string>()));
+void Builder::start(const boost::program_options::variables_map& vm) {
+  init(choose_sev_lvl(vm["log_lvl"].as<std::string>()));
 
   settings_process(vm);
 
@@ -73,7 +73,7 @@ void Builder::start(const po::variables_map& vm) {
     BOOST_LOG_TRIVIAL(error) << "Error in processing: " << e.what();
   }
 }
-bool Builder::run_process(const string& target, Process_info& process_info) {
+bool Builder::run_process(const std::string& target, Process_info& process_info) {
   if (process_info.terminated) {
     return false;
   }
@@ -111,7 +111,7 @@ void Builder::init(const boost::log::trivial::severity_level& sev_lvl) {
                                   "[%Severity%] %TimeStamp%: %Message%");
 }
 boost::log::trivial::severity_level Builder::choose_sev_lvl(
-    const string& sev_lvl_str) {
+    const std::string& sev_lvl_str) {
   if (sev_lvl_str == "trace")
     return boost::log::trivial::severity_level::trace;
   else if (sev_lvl_str == "debug")
@@ -123,7 +123,7 @@ boost::log::trivial::severity_level Builder::choose_sev_lvl(
   else
     return boost::log::trivial::severity_level::error;
 }
-void Builder::settings_process(const po::variables_map& vm) {
+void Builder::settings_process(const boost::program_options::variables_map& vm) {
   bool install = false, pack = false;
   std::string config = "Debug";
   int time = 0;

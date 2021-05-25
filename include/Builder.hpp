@@ -8,7 +8,6 @@
 #include <boost/log/utility/setup/file.hpp>
 #include <boost/log/utility/setup/console.hpp>
 #include <boost/log/utility/setup/common_attributes.hpp>
-
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <string>
@@ -18,28 +17,22 @@
 #include <pthread.h>
 #include <future>
 
-
-namespace po = boost::program_options;
-using string = std::string;
-using std::cout;
-using std::endl;
-
-const char error_mes[] = "**********BAD SYNTAX**********\n"
-                         "Look to --help or -h";
+const char error_mes[] = "Error\n"
+                         "Write to get Help: --help or -h";
 
 class Builder{
  public:
-  static void create_program_options(po::options_description& desc,
-                                     po::variables_map& vm,
+  static void create_program_options(boost::program_options::options_description& desc,
+                                     boost::program_options::variables_map& vm,
                                      const int& argc, const char *argv[]);
 
-  void start(const po::variables_map& vm);
+  void start(const boost::program_options::variables_map& vm);
 
   void init(const boost::log::trivial::severity_level& sev_lvl);
 
-  boost::log::trivial::severity_level choose_sev_lvl(const string& sev_lvl_str);
+  boost::log::trivial::severity_level choose_sev_lvl(const std::string& sev_lvl_str);
 
-  void settings_process(const po::variables_map& vm);
+  void settings_process(const boost::program_options::variables_map& vm);
 
   bool run_process(const std::string& target, Process_info& process_info);
 
