@@ -42,8 +42,9 @@ void Builder::start(const boost::program_options::variables_map& vm) {
   }
   try{
     std::this_thread::sleep_for(std::chrono::seconds(4));
-    std::shared_future<bool> pack = std::async([this, &process_info]() -> bool {
-      return this->run_process("config", process_info);
+    std::shared_future<bool> pack = std::async([this, &process_info]() ->
+                                               bool {return this->run_process(
+                                                     "config", process_info);
     });
 
     pack.wait();
@@ -73,7 +74,8 @@ void Builder::start(const boost::program_options::variables_map& vm) {
     BOOST_LOG_TRIVIAL(error) << "Error in processing: " << e.what();
   }
 }
-bool Builder::run_process(const std::string& target, Process_info& process_info) {
+bool Builder::run_process(const std::string& target, Process_info& process_info)
+{
   if (process_info.terminated) {
     return false;
   }
@@ -86,7 +88,8 @@ bool Builder::run_process(const std::string& target, Process_info& process_info)
   process_info.set_bool(false);
   process_info.set_child(std::move(child));
   for (std::string line;
-       process_info.current_child.running() && std::getline(stream, line);) {
+       process_info.current_child.running() && std::getline(stream,
+                                                            line);) {
     BOOST_LOG_TRIVIAL(info) << line;
   }
   process_info.current_child.wait();
@@ -104,7 +107,8 @@ bool Builder::run_process(const std::string& target, Process_info& process_info)
 void Builder::init(const boost::log::trivial::severity_level& sev_lvl) {
   boost::log::add_common_attributes();
 
-  boost::log::core::get()->set_filter(boost::log::trivial::severity >= sev_lvl);
+  boost::log::core::get()->set_filter(boost::log::trivial::severity >=
+                                      sev_lvl);
 
   boost::log::add_console_log(std::clog,
                               boost::log::keywords::format =
@@ -123,7 +127,8 @@ boost::log::trivial::severity_level Builder::choose_sev_lvl(
   else
     return boost::log::trivial::severity_level::error;
 }
-void Builder::settings_process(const boost::program_options::variables_map& vmap) {
+void Builder::settings_process(const boost::program_options::variables_map&
+                                   vmap) {
   bool install = false, pack = false;
   std::string config = "Debug";
   int time = 0;
