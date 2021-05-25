@@ -2,23 +2,28 @@
 
 #include <Builder.hpp>
 
-void Builder::create_program_options(boost::program_options::options_description& desc,
-                                     boost::program_options::variables_map& vmap, const int& argc,
+void Builder::create_program_options(
+    boost::program_options::options_description& desc,
+                                     boost::program_options::variables_map&
+                                         vmap, const int& argc,
                                      const char** argv) {
   desc.add_options()
       ("help,h", "Help screen\n")
 
-      ("log_lvl,l", boost::program_options::value<std::string>()->default_value("debug"),
+      ("log_lvl,l", boost::program_options::value<std::string>()->
+          default_value("debug"),
            "Logger severity\n")
 
-      ("config,c", boost::program_options::value<std::string>()->default_value("Debug"),
+      ("config,c", boost::program_options::value<std::string>()->
+          default_value("Debug"),
        "Config build\n")
 
       ("install,i", "Install step\n")
 
       ("pack,p", "Pack step\n")
 
-      ("timeout,t", boost::program_options::value<int>()->default_value(0),
+      ("timeout,t", boost::program_options::value<int>()
+          ->default_value(0),
                            "Set waiting time\n");
   store(parse_command_line(argc, argv, desc), vmap);
   notify(vmap);
@@ -44,7 +49,8 @@ void Builder::start(const boost::program_options::variables_map& vm) {
     std::this_thread::sleep_for(std::chrono::seconds(4));
     std::shared_future<bool> pack = std::async([this, &process_info]() ->
                                                bool {return this->run_process(
-                                                     "config", process_info);
+                                                     "config",
+                                                     process_info);
     });
 
     pack.wait();
