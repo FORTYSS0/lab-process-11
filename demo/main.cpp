@@ -18,7 +18,6 @@ int main(int argc, const char *argv[]) {
       throw po::error(error_mes);
   } catch (const po::error &ex)
   {
-
     BOOST_LOG_TRIVIAL(error) << ex.what() << '\n';
   }
 }
