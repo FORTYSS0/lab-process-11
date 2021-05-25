@@ -133,7 +133,7 @@ void Builder::settings_process(const boost::program_options::variables_map& vmap
   if (vmap.count("install")) {
     install = true;
   }
-  if (vmap.count("pack")) {
+  if (vmap.count("packege")) {
     pack = true;
   }
   if (vmap.count("timeout")) {
