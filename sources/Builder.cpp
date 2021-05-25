@@ -26,6 +26,7 @@ void Builder::create_program_options(
                            "Set waiting time\n");
   store(parse_command_line(argc, argv, desc), vmap);
   notify(vmap);
+
 }
 
 void time_handler(Process_info&);
