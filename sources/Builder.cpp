@@ -91,9 +91,6 @@ bool Builder::run_process(const string& target, Process_info& process_info) {
   }
   process_info.current_child.wait();
 
-
-
-
   auto exit_code = process_info.current_child.exit_code();
 
   if (exit_code != 0) {
