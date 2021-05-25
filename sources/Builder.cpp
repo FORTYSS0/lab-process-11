@@ -4,9 +4,8 @@
 
 void Builder::create_program_options(
     boost::program_options::options_description& desc,
-                                     boost::program_options::variables_map&
-                                         vmap, const int& argc,
-                                     const char** argv) {
+    boost::program_options::variables_map& vmap,
+    const int& argc, const char** argv) {
   desc.add_options()
       ("help,h", "Help screen\n")
 
