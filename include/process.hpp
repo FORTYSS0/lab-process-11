@@ -26,7 +26,7 @@ class Process{
 
   std::string get_command(const std::string& target){
     if (target == "config") {
-      return (" -B" + BUILD_TARGET + " -DCMAKE_INSTALL_PREFIX=" +
+      return (" -H. -B" + BUILD_TARGET + " -DCMAKE_INSTALL_PREFIX=" +
               INSTALL_TARGET + " -DCMAKE_BUILD_TYPE=" + config);
     } else {
       return ("--build " + BUILD_TARGET +
