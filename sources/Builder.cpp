@@ -1,4 +1,4 @@
-// Copyright 2021 MIX-1 <danilonil1@yandex.ru>
+// Copyright 2021 by FORTYSS
 
 #include <Builder.hpp>
 
@@ -64,7 +64,7 @@ void Builder::start(const po::variables_map& vm) {
     if (p_process->get_pack()) {
       if (pack.get()) {
         pack = std::async([this, &process_info]() -> bool {
-          return this->run_process("pack", process_info);
+          return this->run_process("package", process_info);
         });
         pack.wait();
       }
