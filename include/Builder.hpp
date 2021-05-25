@@ -25,7 +25,7 @@ class Builder{
   static void create_program_options(
       boost::program_options::options_description& desc,
                                      boost::program_options::variables_map&
-          vmap,const int& argc, const char *argv[]);
+          vmap, const int& argc, const char *argv[]);
 
   void start(const boost::program_options::variables_map& vmap);
 
